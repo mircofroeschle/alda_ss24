@@ -23,7 +23,7 @@ public:
   };
 
   /// Erzeugt eine leere Liste
-  List() {}
+  List() {last = &dummy;}
 
   /// Wir loeschen den Copy-Konstruktor. Damit ist es nicht mehr
   /// moeglich aus versehen eine teure Kopie der Liste zu erstellen.
@@ -37,7 +37,9 @@ public:
   /// bis die Liste leer ist. Nutzen Sie dabei aus, dass –wie oben beschrieben– pop_front() einen UP zurück
   /// liefert, der automatisch gelöscht wir
   ~List() {
-    while( !pop_front()) continue;
+    while( !empty()) {
+      pop_front();
+    }
     std::cout << "Destruktor ausgeführt: Speicher freigegeben." << std::endl;
   }
 
@@ -266,6 +268,11 @@ public:
 
 private:
   Item dummy;
+  /// Erweitern Sie die Klasse List um ein privates Datenelement last vom Typ Item*. Es handelt
+  /// sich also um einen klassichen Pointer und keinen smart pointer! Dieser soll folgende Datenstruk-
+  /// turinvariante erfüllen: last zeigt immer auf den letzten Eintrag der Liste oder auf &dummy, falls
+  /// die Liste leer ist.
+  Item* last;
 
   size_t num_items{0};
 
