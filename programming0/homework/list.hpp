@@ -80,6 +80,9 @@ public:
     new_item->next = std::move(dummy.next);
     dummy.next = std::move(new_item);
 
+    // update des letzten Elements, falls die Liste leer ist.
+    if (num_items == 0) {last = new_item.get();}
+
     ++num_items;
     return dummy.next.get();
   }
@@ -283,6 +286,11 @@ private:
     before.next = std::move(popped->next);
 
     assert(!popped->next);
+
+    // Falls das entferte Element das letzte ist
+    if (before.next.get() == &dummy) {
+      last = &before;
+    }
     num_items--;
 
     return popped;
