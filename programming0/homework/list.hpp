@@ -81,7 +81,7 @@ public:
     dummy.next = std::move(new_item);
 
     // update des letzten Elements, falls die Liste leer ist.
-    if (num_items == 0) {last = new_item.get();}
+    if (num_items == 0) {last = dummy.next.get();}
 
     ++num_items;
     return dummy.next.get();
@@ -177,10 +177,15 @@ public:
   Item *push_back_item(std::unique_ptr<Item> &&item) {
     assert(!!item); // Tipp: `!!item` ist ein short-cut für
                     // `static_cast<bool>(item)`
-    last->next = std::move(item);
-    last = item.get(); 
+    if (num_items == 0) {
+      dummy.next = std::move(item);
+      last = dummy.next.get();
+    } else {
+      last->next = std::move(item);  
+      last = last->next.get();
+    }
     num_items++;
-    assert(!item->next);
+    assert(!last->next);
     return nullptr;
   }
 
@@ -203,6 +208,21 @@ public:
     const size_t initial_size = size() + append_to_if_true.size();
     (void)initial_size; // verhindert eine Warnung, falls assert wegoptimiert
     // wurde
+    assert(!this->empty());
+
+    Item* before = &dummy;
+    Item* current = dummy.next.get();
+
+    while (current) {
+      if (predicate(current->get_value())) { 
+        auto extracted_item = extract_after(*before);
+        append_to_if_true.push_back_item(std::move(extracted_item));
+        current = before->next.get();
+      } else {
+      before = current;
+      current = current->next.get();
+      }
+    }
 
     assert(size() + append_to_if_true.size() == initial_size);
   }
@@ -221,13 +241,15 @@ public:
   /// std::cout << lst2 << std::endl; // gibt "[]" aus.
   /// ```
   void concat(List &other) {
-    (void)other; // verhindert Warnung; kann entfernt werden, sobald die
+    // (void)other; // verhindert Warnung; kann entfernt werden, sobald die
     // auskommentierte Implementierung genutzt wird.
 
-    // last->next = std::move(other.dummy.next);
-    // num_items += other.num_items;
-    // other.num_items = 0;
-    // other.last = &other.dummy;
+    last->next = std::move(other.dummy.next); 
+    num_items += other.num_items;
+    other.num_items = 0;
+    other.last = &other.dummy;
+
+    // FUNKTIONIERT ABER...
   }
 
   /// Gibt genau dann `true` zurueck, wenn die Liste sortiert ist.

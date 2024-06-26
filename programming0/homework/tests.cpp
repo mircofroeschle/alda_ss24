@@ -32,6 +32,7 @@ bool test_push_back() {
 
   for (int i = 0; i < 10; ++i) {
     fail_unless_eq(lst.size(), static_cast<size_t>(i));
+    
     lst.push_back(i);
   }
 
@@ -40,7 +41,7 @@ bool test_push_back() {
   for (int i = 10; i; --i) {
     fail_unless_eq(lst.size(), static_cast<size_t>(i));
     auto popped = lst.pop_front();
-    fail_unless_eq(popped->get_value(), i - 1);
+    fail_unless_eq(popped->get_value(), 10 - i);
   }
 
   fail_unless(lst.empty());
@@ -49,32 +50,34 @@ bool test_push_back() {
   return true;
 }
 
-bool test_1_4() {
+bool test_2_4() {
   List lst;
-  fail_unless(!lst.empty());
+  fail_unless(lst.empty());
 
   for (int i = 0; i < 3; ++i) {
     fail_unless_eq(lst.size(), static_cast<size_t>(i));
-    lst.push_front(i);    
+    lst.push_front(i);
   }
-
+  
+  
   lst.push_back(3);
-
-  for (int i = 2; i >= 0; --i){
-    fail_unless_eq(i, lst.pop_front()->get_value());
+  
+  
+  for (int i = 3; i; --i) {
+    fail_unless_eq(lst.size(), static_cast<size_t>(i) + 1);
+    auto popped = lst.pop_front();
+    fail_unless_eq(popped->get_value(), i - 1);
   }
 
   lst.push_back(4);
 
-  int i = 1;
-  while (i >= 0) {
-    lst.pop_front();
-    --i;
+  for (int i = 2; i; --i) {
+    fail_unless_eq(lst.size(), static_cast<size_t>(i));
+    auto popped = lst.pop_front();
   }
-  
+
   fail_unless(lst.empty());
   return true;
-
 }
 
 bool test_foreach() {
@@ -120,11 +123,54 @@ bool test_destruct() {
   return true;
 }
 
+bool test_concat() {
+  List lst_1;
+  List lst_2;
+
+  fail_unless(lst_1.empty());
+  fail_unless(lst_2.empty());
+
+  for (int i = 0; i < 10; ++i) {
+    fail_unless_eq(lst_1.size(), static_cast<size_t>(i));
+    // fail_unless_eq(lst_2.size(), static_cast<size_t>(i));
+    lst_1.push_front(i);
+    // lst_2.push_front(i);
+  }
+
+  lst_2.concat(lst_1);
+  
+  return true;
+}
+
+bool test_moveinto() {
+  List lst;
+  List append_if_true;
+
+  fail_unless(lst.empty());
+
+  for (int i = 0; i < 10; ++i) {
+    fail_unless_eq(lst.size(), static_cast<size_t>(i));
+    lst.push_front(i);
+  }
+  size_t init_size = lst.size();
+  auto predicate = [] (const List::Value& val) { return val % 2 == 0; };
+
+  lst.move_into_if(append_if_true, predicate);
+  fail_unless_eq(lst.size() + append_if_true.size(), init_size);
+  fail_if(lst.size() == init_size);
+
+  return true;
+}
+
 int main() {
   run_test(test_push_front);
   run_test(test_foreach);
   run_test(test_ostream);
   run_test(test_destruct);
+  run_test(test_push_back);
+  run_test(test_2_4);
+  run_test(test_concat);
+  run_test(test_moveinto);
 
   return 0;
 }
