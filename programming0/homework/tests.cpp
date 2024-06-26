@@ -25,6 +25,58 @@ bool test_push_front() {
   return true;
 }
 
+bool test_push_back() {
+  List lst;
+
+  fail_unless(lst.empty());
+
+  for (int i = 0; i < 10; ++i) {
+    fail_unless_eq(lst.size(), static_cast<size_t>(i));
+    lst.push_back(i);
+  }
+
+  fail_if(lst.empty());
+
+  for (int i = 10; i; --i) {
+    fail_unless_eq(lst.size(), static_cast<size_t>(i));
+    auto popped = lst.pop_front();
+    fail_unless_eq(popped->get_value(), i - 1);
+  }
+
+  fail_unless(lst.empty());
+
+
+  return true;
+}
+
+bool test_1_4() {
+  List lst;
+  fail_unless(!lst.empty());
+
+  for (int i = 0; i < 3; ++i) {
+    fail_unless_eq(lst.size(), static_cast<size_t>(i));
+    lst.push_front(i);    
+  }
+
+  lst.push_back(3);
+
+  for (int i = 2; i >= 0; --i){
+    fail_unless_eq(i, lst.pop_front()->get_value());
+  }
+
+  lst.push_back(4);
+
+  int i = 1;
+  while (i >= 0) {
+    lst.pop_front();
+    --i;
+  }
+  
+  fail_unless(lst.empty());
+  return true;
+
+}
+
 bool test_foreach() {
   List lst;
 
@@ -76,3 +128,6 @@ int main() {
 
   return 0;
 }
+
+
+

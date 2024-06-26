@@ -177,6 +177,9 @@ public:
   Item *push_back_item(std::unique_ptr<Item> &&item) {
     assert(!!item); // Tipp: `!!item` ist ein short-cut für
                     // `static_cast<bool>(item)`
+    last->next = std::move(item);
+    last = item.get(); 
+    num_items++;
     assert(!item->next);
     return nullptr;
   }
