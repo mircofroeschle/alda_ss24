@@ -292,7 +292,32 @@ public:
   /// lst.sort();
   /// std::cout << lst << std::endl; // gibt "[1, 2, 3, 4]" aus.
   /// ```
-  uint64_t sort() { return 0; }
+  uint64_t sort(uint16_t num_of_comparisons = 0) {
+    if(this->is_sorted()) {return num_of_comparisons;}
+
+    if (this->size() <=1 ) {return num_of_comparisons;}
+
+    List greater_or_equal;
+    assert(greater_or_equal.empty());
+    auto pivot = this->pop_front();
+
+    auto predicate = [&pivot, &num_of_comparisons] (const List::Value& val) { 
+      num_of_comparisons++; 
+      return val >= pivot->get_value(); 
+    };
+
+    this->move_into_if(greater_or_equal, predicate);
+    num_of_comparisons = greater_or_equal.sort(num_of_comparisons);
+    num_of_comparisons = this->sort(num_of_comparisons);
+    
+    // Anmerkung: Zusammenführen funktioniert nicht richtig
+
+    this->push_back_item(std::move(pivot));
+    this->concat(greater_or_equal);
+    
+    return num_of_comparisons;
+    }
+
 
 private:
   Item dummy;

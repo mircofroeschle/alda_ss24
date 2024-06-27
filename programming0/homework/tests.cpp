@@ -162,6 +162,39 @@ bool test_moveinto() {
   return true;
 }
 
+bool test_sorted() {
+  List lst;
+  fail_unless(lst.empty());
+
+  lst.push_back(11);
+  lst.push_front(12);
+  lst.push_back(14);
+
+  // Anmerkung: sortiert nicht richtig! 
+
+  // for (int i = 10; i ; --i) {
+  //   // fail_unless_eq(lst.size(), static_cast<size_t>(i));
+  //   lst.push_front(i);
+  // }
+
+  // for (int i = 0; i < 10; ++i) {
+  //   fail_unless_eq(lst.size(), static_cast<size_t>(i) + 3);
+  //   lst.push_front(i);
+  // }
+
+
+  std::cout << lst << std::endl;
+
+  auto init_size = lst.size();
+
+  lst.sort();
+  
+  fail_unless_eq(lst.size(), init_size);
+  
+  fail_unless(lst.is_sorted());
+  return true;
+}
+
 int main() {
   run_test(test_push_front);
   run_test(test_foreach);
@@ -171,6 +204,7 @@ int main() {
   run_test(test_2_4);
   run_test(test_concat);
   run_test(test_moveinto);
+  run_test(test_sorted);
 
   return 0;
 }
