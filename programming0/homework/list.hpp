@@ -40,7 +40,7 @@ public:
     while( !empty()) {
       pop_front();
     }
-    std::cout << "Destruktor ausgeführt: Speicher freigegeben." << std::endl;
+    // std::cout << "Destruktor ausgeführt: Speicher freigegeben." << std::endl;
   }
 
   /// Gibt genau dann `true` zurueck, wenn die Liste leer ist.
@@ -222,6 +222,7 @@ public:
       before = current;
       current = current->next.get();
       }
+      std::cout << append_to_if_true <<std::endl;
     }
 
     assert(size() + append_to_if_true.size() == initial_size);
@@ -249,7 +250,7 @@ public:
     other.num_items = 0;
     other.last = &other.dummy;
 
-    // FUNKTIONIERT ABER...
+    // works completely fine...
   }
 
   /// Gibt genau dann `true` zurueck, wenn die Liste sortiert ist.
@@ -293,11 +294,11 @@ public:
   /// std::cout << lst << std::endl; // gibt "[1, 2, 3, 4]" aus.
   /// ```
   uint64_t sort(uint16_t num_of_comparisons = 0) {
-    if(this->is_sorted()) {return num_of_comparisons;}
 
     if (this->size() <=1 ) {return num_of_comparisons;}
 
     List greater_or_equal;
+
     assert(greater_or_equal.empty());
     auto pivot = this->pop_front();
 
@@ -316,8 +317,8 @@ public:
     this->concat(greater_or_equal);
     
     return num_of_comparisons;
-    }
-
+  }
+  
 
 private:
   Item dummy;
