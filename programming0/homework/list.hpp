@@ -222,7 +222,7 @@ public:
       before = current;
       current = current->next.get();
       }
-      std::cout << append_to_if_true <<std::endl;
+      // std::cout << append_to_if_true <<std::endl;
     }
 
     assert(size() + append_to_if_true.size() == initial_size);
@@ -241,16 +241,27 @@ public:
   /// std::cout << lst1 << std::endl; // gibt "[1, 2]" aus.
   /// std::cout << lst2 << std::endl; // gibt "[]" aus.
   /// ```
+  // corrected concat
   void concat(List &other) {
     // (void)other; // verhindert Warnung; kann entfernt werden, sobald die
     // auskommentierte Implementierung genutzt wird.
+    
+    // Change in Aufgabe 3: Updating the last value of the new concated list
+    auto last_2 = std::move(other.last);
 
     last->next = std::move(other.dummy.next); 
     num_items += other.num_items;
     other.num_items = 0;
     other.last = &other.dummy;
 
-    // works completely fine...
+    // Change in Aufgabe 3: Updating the last value of the new concated list
+    last = std::move(last_2);   
+  }
+
+  
+  //Ergänzung, um den Test für Aufg. 3 durchführen zu können
+  Item* get_last() const {
+    return last;
   }
 
   /// Gibt genau dann `true` zurueck, wenn die Liste sortiert ist.
@@ -311,7 +322,7 @@ public:
     num_of_comparisons = greater_or_equal.sort(num_of_comparisons);
     num_of_comparisons = this->sort(num_of_comparisons);
     
-    // Anmerkung: Zusammenführen funktioniert nicht richtig
+    // Anmerkung: Zusammenführen funktioniert nicht richtig...
 
     this->push_back_item(std::move(pivot));
     this->concat(greater_or_equal);
