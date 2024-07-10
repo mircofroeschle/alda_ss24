@@ -67,21 +67,39 @@ public:
   Node find(Node x) {
     const auto parent_x = parents.get_parent(x);
     (void)parent_x; // vermeide Warnung: unused variable
-    abort();        // not implemented !
-
-    if constexpr (PathCompression) {
-    } else {
+    // abort();        // not implemented !
+    // TASK 1.1 Implementation:
+    if (parent_x == x) {
+      return x;
+    } 
+    else {
+        Node x_ = find(parent_x);
+        if constexpr (PathCompression) {
+          parents.set_parent(x, x_);
+        }
+        return x_;
     }
   }
 
   void link(Node root_x, Node root_y) {
     (void)root_x; // vermeide Warnung: unused variable
     (void)root_y; // vermeide Warnung: unused variable
-    abort();      // not implemented !
+    // abort();      // not implemented !
+
+   // TASK 1.2 Implementation link
+    assert(find(root_x) != find(root_y));
 
     if constexpr (UnionByRank) {
+        if (rank.at(root_x) < rank.at(root_y)) {
+          parents.set_parent(root_x, root_y);
+        } else {
+            parents.set_parent(root_y, root_x);
+            if (rank.at(root_x) == rank.at(root_y)) {  rank.at(root_x)++; }
+        } 
     } else {
+      parents.set_parent(root_x, root_y);
     }
+    num_groups--;
   }
 
   void combine(Node x, Node y) {
