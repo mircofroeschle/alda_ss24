@@ -75,11 +75,41 @@ template <typename UnionFind> bool test_find_combine() {
   return true;
 } 
 
+bool test_max_node() {
+  std::vector<Edge> edges = {{10, 15, 1.0}, {14, 13, 2.0}, {20, 5, 3.0}};
+  fail_unless(edges.size() == 3);
+
+  Node max = max_node(edges);
+  fail_unless(max == 20);
+  
+  return true;
+}
+
+template <typename UnionFind> bool test_kruskal() {
+  std::vector<Edge> edges_msf = {{1, 15, 1.0}, {4, 13, 2.0}, {2, 5, 3.0},{8, 11, 2.4}, {14, 7, 4.5}, {3, 18, 1.2}, {12, 1, 3.8}, {19, 9, 5.1}, {16, 4, 0.9}, {10, 13, 2.7}, {6, 17, 4.3}, {0, 15, 3.6}, {2, 5, 1.5}};
+  fail_unless(edges_msf.size() == 13);
+  std::vector<Edge> edges_mst = {{1, 2, 7}, {2, 1, 7},{1, 3, 6}, {3, 1, 6}, {1, 4, 9}, {4, 1, 9}, {2, 4, 2}, {4, 2, 2}, {2, 3, 3}, {3, 2, 3}, {4, 3, 4}}; // Beispiel aus Buch.
+ 
+  KruskalResult result_msf = kruskal<UnionFind>(edges_msf); // Why additionally <UnionFind>?
+  KruskalResult result_mst = kruskal<UnionFind>(edges_mst);
+
+  fail_if(result_msf.is_spanning_tree);
+  fail_unless(result_mst.is_spanning_tree);
+
+
+  fail_unless(result_mst.total_weight == 11);
+
+  return true;
+}
+
+
 int main() {
   run_test(test_gilbert_graph);
 
   run_test_all_ufs(test_union_find_small_hardcoded);
   run_test_all_ufs(test_find_combine);
+  run_test(test_max_node);
+  run_test_all_ufs(test_kruskal);
 
   return 0;
 }
