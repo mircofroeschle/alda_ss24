@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -Wpedantic -Werror -g -O3 -DNDEBUG -rdynamic CMakeFiles/msf.dir/msf.cpp.o -o msf 
