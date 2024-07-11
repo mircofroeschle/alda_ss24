@@ -135,17 +135,6 @@ using UnionFindPCAndRank = UnionFind<true, true>;
 // Die Funktion `max_node` berechnet den größten Knoten-Index,
 // der in den Kanten `edges` vorkommt.
 
-// Beginnen Sie damit, die Hilfsfunktion Node max_node(std::vector<Edge> &edges) zu vervoll-
-// ständigen. Sie soll unter allen Kanten den Knoten mit größtem Index zurück geben. Erstellen
-// Sie entsprechende Testfälle, welche die Korrektheit Ihrer Implementierung prüfen. Kanten sind
-// dabei wie folgt definiert:
-// using Node = uint32_t;
-// using Weight = float;
-// struct Edge {
-// Node from;
-// Node to;
-// Weight weight;
-// };
 Node max_node(std::vector<Edge> &edges) {
   (void)edges; // vermeide Warnung: unused variable
   // abort();     // not implemented !
