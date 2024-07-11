@@ -68,11 +68,11 @@ public:
     const auto parent_x = parents.get_parent(x);
     (void)parent_x; // vermeide Warnung: unused variable
     // abort();        // not implemented !
+
     // TASK 1.1 Implementation:
     if (parent_x == x) {
       return x;
-    } 
-    else {
+    } else {
         Node x_ = find(parent_x);
         if constexpr (PathCompression) {
           parents.set_parent(x, x_);
@@ -85,10 +85,14 @@ public:
     (void)root_x; // vermeide Warnung: unused variable
     (void)root_y; // vermeide Warnung: unused variable
     // abort();      // not implemented !
-
+    
    // TASK 1.2 Implementation link
     assert(find(root_x) != find(root_y));
 
+
+    // TASK 1.2 Implementation link
+    assert(find(root_x) != find(root_y));
+    
     if constexpr (UnionByRank) {
         if (rank.at(root_x) < rank.at(root_y)) {
           parents.set_parent(root_x, root_y);
@@ -100,6 +104,7 @@ public:
       parents.set_parent(root_x, root_y);
     }
     num_groups--;
+
   }
 
   void combine(Node x, Node y) {
@@ -175,7 +180,9 @@ KruskalResult kruskal(std::vector<Edge> &edges) {
   UnionFind uf(n + 1);
   Weight total_weight = 0;
 
+
   // abort(); // not implemented
+
   // Sorting edges:
   std::sort(edges.begin(), edges.end(), [](const Edge& u, const Edge& v) { 
     return u.weight < v.weight;
