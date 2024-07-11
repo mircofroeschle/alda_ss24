@@ -175,7 +175,7 @@ KruskalResult kruskal(std::vector<Edge> &edges) {
   UnionFind uf(n + 1);
   Weight total_weight = 0;
 
-  abort(); // not implemented
+  // abort(); // not implemented
   // Sorting edges:
   std::sort(edges.begin(), edges.end(), [](const Edge& u, const Edge& v) { 
     return u.weight < v.weight;
