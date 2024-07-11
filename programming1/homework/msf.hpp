@@ -129,10 +129,34 @@ using UnionFindPCAndRank = UnionFind<true, true>;
 
 // Die Funktion `max_node` berechnet den größten Knoten-Index,
 // der in den Kanten `edges` vorkommt.
+
+// Beginnen Sie damit, die Hilfsfunktion Node max_node(std::vector<Edge> &edges) zu vervoll-
+// ständigen. Sie soll unter allen Kanten den Knoten mit größtem Index zurück geben. Erstellen
+// Sie entsprechende Testfälle, welche die Korrektheit Ihrer Implementierung prüfen. Kanten sind
+// dabei wie folgt definiert:
+// using Node = uint32_t;
+// using Weight = float;
+// struct Edge {
+// Node from;
+// Node to;
+// Weight weight;
+// };
 Node max_node(std::vector<Edge> &edges) {
   (void)edges; // vermeide Warnung: unused variable
-  abort();     // not implemented !
+  // abort();     // not implemented !
+  
+  Node max_node = 0;
+  for (const Edge& edge : edges) {
+      if (edge.from > max_node) {
+          max_node = edge.from;
+      }
+      if (edge.to > max_node) {
+          max_node = edge.to;
+      }
+  }
+  return max_node;
 }
+
 
 struct KruskalResult {
   std::vector<Edge> msf_edges;
@@ -145,13 +169,26 @@ struct KruskalResult {
 
 template <typename UnionFind> //
 KruskalResult kruskal(std::vector<Edge> &edges) {
-  std::vector<Edge> msf_edges;
+  std::vector<Edge> msf_edges; // empty for start
 
   Node n = max_node(edges);
   UnionFind uf(n + 1);
   Weight total_weight = 0;
 
   abort(); // not implemented
+  // Sorting edges:
+  std::sort(edges.begin(), edges.end(), [](const Edge& u, const Edge& v) { 
+    return u.weight < v.weight;
+  });
+
+  // Apply Kruskal:
+  for (const Edge& edge : edges) {
+    if (uf.find(edge.from) != uf.find(edge.to)) {
+      msf_edges.push_back(edge);
+      total_weight += edge.weight;
+      uf.combine(edge.from, edge.to);
+    }
+  }
 
   return KruskalResult{msf_edges, total_weight, uf.number_of_groups() == 1,
                        uf.number_of_parent_accesses()};
