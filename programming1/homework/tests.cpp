@@ -96,7 +96,6 @@ template <typename UnionFind> bool test_kruskal() {
   fail_if(result_msf.is_spanning_tree);
   // fail_unless(result_mst.is_spanning_tree); // Remark: Not working for any reason... ? @Tutor: Correction Remark is appreciated :)
 
-
   fail_unless(result_mst.total_weight == 11);
 
   return true;
