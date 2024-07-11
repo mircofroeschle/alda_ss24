@@ -85,6 +85,10 @@ public:
     (void)root_x; // vermeide Warnung: unused variable
     (void)root_y; // vermeide Warnung: unused variable
     // abort();      // not implemented !
+    
+   // TASK 1.2 Implementation link
+    assert(find(root_x) != find(root_y));
+
 
     // TASK 1.2 Implementation link
     assert(find(root_x) != find(root_y));
@@ -145,7 +149,7 @@ using UnionFindPCAndRank = UnionFind<true, true>;
 Node max_node(std::vector<Edge> &edges) {
   (void)edges; // vermeide Warnung: unused variable
   // abort();     // not implemented !
-
+  
   Node max_node = 0;
   for (const Edge& edge : edges) {
       if (edge.from > max_node) {
@@ -157,6 +161,7 @@ Node max_node(std::vector<Edge> &edges) {
   }
   return max_node;
 }
+
 
 struct KruskalResult {
   std::vector<Edge> msf_edges;
@@ -174,6 +179,8 @@ KruskalResult kruskal(std::vector<Edge> &edges) {
   Node n = max_node(edges);
   UnionFind uf(n + 1);
   Weight total_weight = 0;
+
+
   // abort(); // not implemented
 
   // Sorting edges:

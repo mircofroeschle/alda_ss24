@@ -1,0 +1,50 @@
+##naive##
+
+größte Instanz: n = 16384
+
+Anzahl der Kanten m: 40821, 41206, 41033, 40799, 41021
+
+durchschnittliche Elternarray-Zugriffe pro Kante (accesses / m): 2380.100, 2329.378, 2238.949, 2212.980, 2334.048
+
+Median: 2334.048
+
+Std-Abweichung: 61.380
+
+
+##PC##
+
+größte Instanz: n = 2097152
+
+Anzahl der Kanten m: 5246382, 5238459, 5242968, 5240880, 5240896
+
+durchschnittliche  Elternarray-Zugriffe pro Kante (accesses / m): 17.727, 17.723, 17.722, 17.743, 17.725
+
+Median: 17.725
+
+Sdt-Abweichung: 0.008
+
+
+##rank##
+
+größte Instanz: n = 2097152
+
+Anzahl der Kanten m: 5246382, 5238459, 5242968, 5240880, 5240896
+
+durchschnittliche Elternarray-Zugriffe pro Kante (accesses / m): 7.023, 7.046, 7.060, 7.031, 7.039
+
+Median: 7.039
+
+Std-Abweichung: 0.014
+
+
+##pc+rank##
+
+größte Instanz: n = 2097152
+
+Anzahl der Kanten m: 5246382, 5238459, 5242968, 5240880, 5240896
+
+durchschnittliche Elternarray-Zugriffe pro Kante (accesses / m): 7.437, 7.439, 7.439, 7.440, 7.440
+
+Median: 7.439
+
+Std-Abweichung: 0.001

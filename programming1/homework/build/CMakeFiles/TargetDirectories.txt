@@ -1,0 +1,4 @@
+/home/leon/alda_ss24/programming1/homework/build/CMakeFiles/tests.dir
+/home/leon/alda_ss24/programming1/homework/build/CMakeFiles/msf.dir
+/home/leon/alda_ss24/programming1/homework/build/CMakeFiles/edit_cache.dir
+/home/leon/alda_ss24/programming1/homework/build/CMakeFiles/rebuild_cache.dir

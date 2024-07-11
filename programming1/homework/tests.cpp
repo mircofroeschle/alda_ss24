@@ -44,7 +44,6 @@ template <typename UnionFind> bool test_find_combine() {
 
   fail_unless(uf.find(0) == uf.find(1));
   fail_unless(uf.find(1) == uf.find(2));
-  
 
   if (UnionFind::path_compression) {
     // Pfadkompression genutzt
@@ -74,6 +73,7 @@ template <typename UnionFind> bool test_find_combine() {
 
   return true;
 } 
+
 
 bool test_max_node() {
   std::vector<Edge> edges = {{10, 15, 1.0}, {14, 13, 2.0}, {20, 5, 3.0}};
@@ -108,6 +108,7 @@ int main() {
 
   run_test_all_ufs(test_union_find_small_hardcoded);
   run_test_all_ufs(test_find_combine);
+
   run_test(test_max_node);
   run_test_all_ufs(test_kruskal);
 
